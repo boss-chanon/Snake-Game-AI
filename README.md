@@ -11,6 +11,6 @@ Used library
 - numpy
 - matplotlib
 
-ENV.py - used to play snake game.Cancel changes
+ENV.py - used to play snake game.
 Agent-DQN.py - Used to teach AI by Deep Q Network.
 Agent-PolicyGradients.py - Used to teach AI by monte carlo policy gradient.
