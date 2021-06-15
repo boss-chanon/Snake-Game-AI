@@ -1,8 +1,6 @@
-from math import trunc
 import random
 import tensorflow.compat.v1 as tf
 import numpy as np
-from collections import deque
 import matplotlib.pyplot as plt
 
 
