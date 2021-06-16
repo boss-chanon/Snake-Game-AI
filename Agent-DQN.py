@@ -163,10 +163,10 @@ if __name__ == "__main__":
     param["train_freq"] = 1
     param["max_memory"] = 2000
 
-    ep = 1000
+    ep = 10
 
-    env = ENV(AI_active=True , limit_speed=False, render=False)
-    reward= train_Agent(ep, env, param, resume=False, is_train=True)
+    env = ENV(AI_active=True , limit_speed=True, render=True)
+    reward= train_Agent(ep, env, param, resume=True, is_train=False)
 
     plt.plot(range(len(reward)), reward)
     plt.xlabel("EP")
