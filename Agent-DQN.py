@@ -106,7 +106,6 @@ class Agent:
 
 def train_Agent(episode, env, param, resume=True, is_train=True):
     sum_reward = []
-    sum_loss = []
     step = 0
     running_reward = None
     agent = Agent(env, param, is_train=is_train)
@@ -140,7 +139,7 @@ def train_Agent(episode, env, param, resume=True, is_train=True):
             next_state = np.reshape(next_state, (1, env.state_space))
             agent.remember(state, action, reward, next_state, done)
             state = next_state
-            loss = agent.train(step, sess)
+            agent.train(step, sess)
 
             env.show()
 
@@ -150,7 +149,6 @@ def train_Agent(episode, env, param, resume=True, is_train=True):
         print("end state: " + str(state))
         print("ep: " + str(ep+1) + " epsilon: " + str(agent.epsilon) + " reward: " + str(score) + " running reward: " + str(running_reward) + " loss: " + str(loss))
         sum_reward.append(score)
-        sum_loss.append(loss)
 
         if ep % 20:
             saver.save(sess, model_path)
@@ -168,17 +166,11 @@ if __name__ == "__main__":
 
     ep = 1000
 
-    env = ENV(AI_active=True , limit_speed=False, render=False)
-    reward , loss= train_Agent(ep, env, param, resume=False, is_train=True)
+    env = ENV(AI_active=True , limit_speed=True, render=True)
+    reward , loss= train_Agent(ep, env, param, resume=True, is_train=False)
 
     plt.plot(range(len(reward)), reward)
     plt.xlabel("EP")
     plt.ylabel("Reward")
     plt.title("REWARD")
-    plt.show()
-
-    plt.plot(range(len(loss)), loss)
-    plt.xlabel("Step")
-    plt.ylabel("Loss")
-    plt.title("LOSS")
     plt.show()
