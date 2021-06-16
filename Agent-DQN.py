@@ -148,12 +148,12 @@ def train_Agent(episode, env, param, resume=True, is_train=True):
                 break
         print("end state: " + str(state))
         print("ep: " + str(ep+1) + " epsilon: " + str(agent.epsilon) + " reward: " + str(score) + " running reward: " + str(running_reward) + " loss: " + str(loss))
-        sum_reward.append(score)
+        sum_reward.append(running_reward)
 
         if ep % 20:
             saver.save(sess, model_path)
     sess.close()
-    return sum_reward, sum_loss
+    return sum_reward
 
 if __name__ == "__main__":
     param = dict()
@@ -164,10 +164,10 @@ if __name__ == "__main__":
     param["train_freq"] = 1
     param["max_memory"] = 2000
 
-    ep = 1000
+    ep = 10
 
     env = ENV(AI_active=True , limit_speed=True, render=True)
-    reward , loss= train_Agent(ep, env, param, resume=True, is_train=False)
+    reward = train_Agent(ep, env, param, resume=True, is_train=False)
 
     plt.plot(range(len(reward)), reward)
     plt.xlabel("EP")
