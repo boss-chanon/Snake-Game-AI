@@ -1,3 +1,4 @@
+from numpy.core.numeric import True_
 import tensorflow.compat.v1 as tf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -144,10 +145,10 @@ if __name__ == "__main__":
     param["learning_rate"] = 0.00025
     param["gamma"] = 0.95
 
-    ep = 10
+    ep = 1000
 
     env = ENV(AI_active=True , limit_speed=True, render=True)
-    reward = train_Agent(ep, env, param, resume=True)
+    reward= train_Agent(ep, env, param, resume=True)
 
     plt.plot(range(len(reward)), reward)
     plt.xlabel("EP")

@@ -3,7 +3,6 @@ import tensorflow.compat.v1 as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 from ENV import ENV
 
 tf.disable_eager_execution()
@@ -139,7 +138,7 @@ def train_Agent(episode, env, param, resume=True, is_train=True):
             next_state = np.reshape(next_state, (1, env.state_space))
             agent.remember(state, action, reward, next_state, done)
             state = next_state
-            agent.train(step, sess)
+            loss = agent.train(step, sess)
 
             env.show()
 
@@ -164,10 +163,10 @@ if __name__ == "__main__":
     param["train_freq"] = 1
     param["max_memory"] = 2000
 
-    ep = 10
+    ep = 1000
 
-    env = ENV(AI_active=True , limit_speed=True, render=True)
-    reward = train_Agent(ep, env, param, resume=True, is_train=False)
+    env = ENV(AI_active=True , limit_speed=False, render=False)
+    reward= train_Agent(ep, env, param, resume=False, is_train=True)
 
     plt.plot(range(len(reward)), reward)
     plt.xlabel("EP")
