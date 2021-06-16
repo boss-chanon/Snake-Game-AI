@@ -86,7 +86,6 @@ class Agent:
 
 def train_Agent(episode, env, param, resume=True):
     sum_reward = []
-    sum_loss = []
     running_reward = None
     agent = Agent(env, param)
     model_path = "model/PolicyGradients/model.ckpt"
@@ -128,28 +127,27 @@ def train_Agent(episode, env, param, resume=True):
             env.show()
 
             if done:
-                loss = agent.train(state_list, reward_list, action_list, sess)
+                agent.train(state_list, reward_list, action_list, sess)
                 running_reward = (score if running_reward is None else running_reward * 0.99 + score * 0.01)
                 break
         print("end state: " + str(state))
         print("ep: " + str(ep+1) + " reward: " + str(score) + " runing reward: " + str(running_reward))
         sum_reward.append(running_reward)
-        sum_loss.append(loss)
 
         if ep % 20:
             saver.save(sess, model_path)
     sess.close()
-    return sum_reward, sum_loss
+    return sum_reward
 
 if __name__ == "__main__":
     param = dict()
     param["learning_rate"] = 0.00025
     param["gamma"] = 0.95
 
-    ep = 1000
+    ep = 10
 
-    env = ENV(AI_active=True , limit_speed=False, render=True)
-    reward , loss= train_Agent(ep, env, param, resume=True)
+    env = ENV(AI_active=True , limit_speed=True, render=True)
+    reward = train_Agent(ep, env, param, resume=True)
 
     plt.plot(range(len(reward)), reward)
     plt.xlabel("EP")
