@@ -17,4 +17,4 @@ ENV.py - used to play snake game.
 
 Agent-DQN.py - Used to teach AI by Deep Q Network.
 
-Agent-PolicyGradients.py - Used to teach AI by monte carlo policy gradient.
+Agent-PolicyGradients.py - Used to teach AI by policy gradient.
