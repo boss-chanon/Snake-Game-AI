@@ -9,6 +9,7 @@ Used library
 - random
 - time
 - tensorflow
+- keras
 - numpy
 - matplotlib
 
