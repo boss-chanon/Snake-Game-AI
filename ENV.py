@@ -13,7 +13,7 @@ BOX_SIZE = 20
 PIXEL_H = BOX_SIZE * HEIGHT
 PIXEL_W = BOX_SIZE * WIDTH
 
-FPS = 10
+SLEEP = 0.05
 
 GAME_TITLE = "Snake Game"
 
@@ -46,8 +46,6 @@ class ENV:
             self.head_image = pygame.transform.scale(pygame.image.load(HEAD_IMAGE), (BOX_SIZE, BOX_SIZE))
             self.body_image = pygame.transform.scale(pygame.image.load(BODY_IMAGE), (BOX_SIZE, BOX_SIZE))
             self.food_image = pygame.transform.scale(pygame.image.load(FOOD_IMAGE), (BOX_SIZE, BOX_SIZE))
-
-            self.clock = pygame.time.Clock()
 
         self.reset()
 
@@ -120,6 +118,16 @@ class ENV:
         if self.direction != "right":
             self.direction = "left"
 
+    def action(self, act):
+        if act == 0:
+            self.go_up()
+        if act == 1:
+            self.go_down()
+        if act == 2:
+            self.go_left()
+        if act == 3:
+            self.go_right()
+
     def move_body(self):
         body_x = self.head_x
         body_y = self.head_y
@@ -185,9 +193,11 @@ class ENV:
 
         return state
 
-    def game_run(self):
+    def game_run(self, act):
         if self.limit_speed:
-            self.clock.tick(FPS)
+            time.sleep(SLEEP)
+
+        self.action(act)
 
         self.move()
         self.move_body()
@@ -241,17 +251,19 @@ if __name__ == "__main__":
 
     while game.running:
 
+        act = 5
+
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_UP]:
-            game.go_up()
+            act = 0
         if pressed[pygame.K_DOWN]:
-            game.go_down()
+            act = 1
         if pressed[pygame.K_LEFT]:
-            game.go_left()
+            act = 2
         if pressed[pygame.K_RIGHT]:
-            game.go_right()
+            act = 3
 
-        game.game_run()
+        game.game_run(act)
         game.show()
     
     pygame.quit()
